@@ -21,7 +21,9 @@ public class JavaEngine implements Runnable {
 	public static JavaEngine instance;
 
 	private boolean isRunning;
+	private long frame;
 	private GameScreen screen;
+	private ObjectController controller;
 	private ArrayList<GameScript> scripts;
 	
 	private int fps;
@@ -42,6 +44,8 @@ public class JavaEngine implements Runnable {
 		fps = 60;
 		
 		scripts = new ArrayList<GameScript>();
+		
+		controller = new ObjectController(this);
 		
 		instance = this;
 		
@@ -83,6 +87,7 @@ public class JavaEngine implements Runnable {
 	
 	private void init() {
 		isRunning = true;
+		frame = 0;
 		
 		System.out.printf("Initializing %d scripts...\n", scripts.size());
 		
@@ -93,7 +98,7 @@ public class JavaEngine implements Runnable {
 		System.out.println("Initializing screen...");
 		screen = new GameScreen(screenWidth, screenHeight, gameName);
 		
-		mouseInput = new MouseInputHandler(screen);
+		mouseInput = new MouseInputHandler(screen, this);
 		keyboardInput = new KeyboardInputHandler(screen);
 	}
 	
@@ -102,6 +107,10 @@ public class JavaEngine implements Runnable {
 	 */
 	
 	private void update() {
+		frame++;
+		
+		controller.Update();
+		
 		for(GameScript script: scripts) {
 			script.update();
 		}
@@ -114,6 +123,8 @@ public class JavaEngine implements Runnable {
 	private void render() {
 		BufferedImage backbuffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_RGB);
 		Graphics bbg = backbuffer.getGraphics();
+		
+		controller.Render(bbg);
 		
 		for(GameScript script: scripts) {
 			script.render(bbg);
@@ -148,6 +159,14 @@ public class JavaEngine implements Runnable {
 	
 	public MouseInputHandler getMouseInput() {
 		return mouseInput;
+	}
+	
+	public ObjectController getObjectController() {
+		return controller;
+	}
+	
+	public long getFrame() {
+		return frame;
 	}
 	
 	/**
