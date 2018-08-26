@@ -28,6 +28,7 @@ public class JavaEngine implements Runnable {
 	
 	private int fps;
 	private int screenWidth, screenHeight;
+	private int gameWidth, gameHeight;
 	private KeyboardInputHandler keyboardInput;
 	private MouseInputHandler mouseInput;
 	
@@ -179,6 +180,24 @@ public class JavaEngine implements Runnable {
 			t = new Thread(this, gameName);
 			t.start();
 		}
+	}
+	
+	public void setGameSize(int width, int height) {
+		gameWidth = width;
+		gameHeight = height;
+	}
+	
+	public void setScreenSize(int width, int height) {
+		screenWidth = width;
+		screenHeight = height;
+	}
+	
+	public int getXRatio() {
+		return screenWidth / gameWidth;
+	}
+	
+	public int getYRatio() {
+		return screenHeight / gameHeight;
 	}
 	
 }

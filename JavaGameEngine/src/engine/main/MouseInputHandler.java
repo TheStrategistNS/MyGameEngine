@@ -27,7 +27,7 @@ public class MouseInputHandler implements MouseInputListener {
 	}
 	
 	public void mouseClicked(MouseEvent e) {
-		Point p = new Point(e.getX() - frame.getInsets().left, e. getY() - frame.getInsets().top);
+		Point p = new Point((e.getX() - frame.getInsets().left) / game.getXRatio(), (e. getY() - frame.getInsets().top) / game.getYRatio());
 		
 		System.out.printf("MouseClicked event at (%d, %d)\n",p.x, p.y);
 		GameObject[] objects = controller.getGameObjects("MouseInteract");

@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import engine.main.ObjectController;
+import engine.main.SpriteGraphic;
 
 public abstract class GameObject {
 	private static final int DEFAULT_DRAW_LEVEL = 5;
@@ -17,6 +18,7 @@ public abstract class GameObject {
 	private ArrayList<String> tags;
 	private ObjectController controller;
 	private int drawLevel;
+	protected SpriteGraphic graphic;
 	
 	//Constructors
 	
@@ -26,6 +28,7 @@ public abstract class GameObject {
 		recalcCom();
 		tags = new ArrayList<String>();
 		drawLevel = DEFAULT_DRAW_LEVEL;
+		graphic = new SpriteGraphic(size.width, size.height);
 	}
 	
 	public GameObject(int x, int y, Dimension size) {
@@ -34,6 +37,7 @@ public abstract class GameObject {
 		recalcCom();
 		tags = new ArrayList<String>();
 		drawLevel = DEFAULT_DRAW_LEVEL;
+		graphic = new SpriteGraphic(size.width, size.height);
 	}
 	
 	public GameObject(Point pos, int width, int height) {
@@ -42,6 +46,7 @@ public abstract class GameObject {
 		recalcCom();
 		tags = new ArrayList<String>();
 		drawLevel = DEFAULT_DRAW_LEVEL;
+		graphic = new SpriteGraphic(size.width, size.height);
 	}
 	
 	public GameObject(int x, int y, int width, int height) {
@@ -50,6 +55,7 @@ public abstract class GameObject {
 		recalcCom();
 		tags = new ArrayList<String>();
 		drawLevel = DEFAULT_DRAW_LEVEL;
+		graphic = new SpriteGraphic(size.width, size.height);
 	}
 	
 	//Public methods
@@ -172,5 +178,14 @@ public abstract class GameObject {
 	//Abstract methods
 	
 	public abstract void Update();
-	public abstract void Render(Graphics g);
+	
+	public void Render(Graphics g) {
+		if(graphic.isReady()) {
+			graphic.Render(g, pos.x, pos.y);
+		}
+		else {
+			System.err.println("Trying to render object not set up. Deleteing object.");
+			kill();
+		}
+	}
 }
