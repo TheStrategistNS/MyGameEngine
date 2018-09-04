@@ -4,24 +4,26 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import engine.interfaces.GameObject;
-
 public class ObjectController {
 	JavaEngine game;
 	ArrayList<GameObject> objects;
+	ArrayList<GameObject> toAdd;
+	ArrayList<GameObject> toRemove;
 	
 	public ObjectController(JavaEngine game) {
 		this.game = game;
 		objects = new ArrayList<GameObject>();
+		toAdd = new ArrayList<GameObject>();
+		toRemove = new ArrayList<GameObject>();
 	}
 	
 	public void addObject(GameObject obj) {
 		obj.addObjectController(this);
-		objects.add(obj);
+		toAdd.add(obj);
 	}
 	
 	public void removeObject(GameObject obj) {
-		objects.remove(obj);
+		toRemove.add(obj);
 	}
 	
 	public GameObject[] getGameObjects() {
@@ -48,9 +50,24 @@ public class ObjectController {
 	}
 	
 	void Update() {
+		
+		//Update all objects
 		for(GameObject obj: objects) {
-			obj.Update();
+			obj.startUpdate();
 		}
+		
+		//Remove objects to be removed
+		for(GameObject obj: toRemove) {
+			objects.remove(obj);
+		}
+		toRemove.clear();
+		
+		//Add objects to be added
+		for(GameObject obj: toAdd) {
+			objects.add(obj);
+		}
+		toAdd.clear();
+		
 	}
 	
 	void Render(Graphics g) {

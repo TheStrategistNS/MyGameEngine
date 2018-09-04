@@ -6,8 +6,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.event.MouseInputListener;
 
-import engine.interfaces.GameObject;
-
 /**
  * 
  * TODO: Do something with this. Doesn't currently do anything but get attached to a component.
@@ -27,14 +25,18 @@ public class MouseInputHandler implements MouseInputListener {
 	}
 	
 	public void mouseClicked(MouseEvent e) {
-		Point p = new Point((e.getX() - frame.getInsets().left) / game.getXRatio(), (e. getY() - frame.getInsets().top) / game.getYRatio());
+		Point p = new Point((e.getX() - frame.getInsets().left) / (int)game.getXRatio(), (e. getY() - frame.getInsets().top) / (int)game.getYRatio());
 		
 		System.out.printf("MouseClicked event at (%d, %d)\n",p.x, p.y);
 		GameObject[] objects = controller.getGameObjects("MouseInteract");
 		for(GameObject obj: objects) {
 			System.out.printf("Testing object at (%d, %d)\n",obj.getPos().x, obj.getPos().y);
 			if(obj.isTouching(p)) {
-				obj.getMouseInteraction().mouseClicked(p);
+				GameEvent click = new GameEvent(GameEvent.MOUSE_EVENT);
+				click.put("point", p);		
+				click.put("x", p.x);
+				click.put("y", p.y);
+				obj.triggerEvent(null, click);
 			}
 		}
 	}

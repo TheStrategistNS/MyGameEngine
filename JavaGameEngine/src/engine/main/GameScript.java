@@ -1,4 +1,4 @@
-package engine.interfaces;
+package engine.main;
 
 import java.awt.Graphics;
 

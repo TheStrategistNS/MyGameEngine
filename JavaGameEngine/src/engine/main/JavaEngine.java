@@ -4,8 +4,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import engine.interfaces.GameScript;
-
 /**
  * <p>My basic Java game engine. For use in java code.</p>
  * <p>Works through GameScript interfaces. Each script, once added to the engine, gets initialized on start, then runs through an update and run method every frame.</p>
@@ -20,7 +18,7 @@ public class JavaEngine implements Runnable {
 	
 	public static JavaEngine instance;
 
-	private boolean isRunning;
+	private boolean isRunning, showPerform;
 	private long frame;
 	private GameScreen screen;
 	private ObjectController controller;
@@ -39,6 +37,7 @@ public class JavaEngine implements Runnable {
 	
 	public JavaEngine(String name) {
 		gameName = name;
+		showPerform = false;
 		
 		screenWidth = 800;
 		screenHeight = 600;
@@ -70,6 +69,10 @@ public class JavaEngine implements Runnable {
 			
 			time = (1000 / fps) - (System.currentTimeMillis() - time);
 			
+			if(showPerform && frame % fps == 0) {
+				System.out.printf("frame %d completed with time of %d\n", frame, time * -1);
+			}
+			
 			if(time > 0) {
 				try {
 					Thread.sleep(time);
@@ -94,6 +97,10 @@ public class JavaEngine implements Runnable {
 		
 		for(GameScript script: scripts) {
 			script.init();
+		}
+		
+		if(screenWidth < gameWidth || screenHeight < gameHeight) {
+			System.err.println("Attempting to make game with screen size less than game size. Errors may occur.");
 		}
 		
 		System.out.println("Initializing screen...");
@@ -192,11 +199,15 @@ public class JavaEngine implements Runnable {
 		screenHeight = height;
 	}
 	
-	public int getXRatio() {
+	public void showPerformance(boolean show) {
+		showPerform = show;
+	}
+	
+	public double getXRatio() {
 		return screenWidth / gameWidth;
 	}
 	
-	public int getYRatio() {
+	public double getYRatio() {
 		return screenHeight / gameHeight;
 	}
 	
