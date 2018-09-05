@@ -4,27 +4,52 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * <p>Manages all GameObjects in the game.</p><p>Holds all active game objects. Updates and renders each object each frame. 
+ * Provides methods of getting game objects and filtering objects based on a String tag.</p>
+ * @author Taylor Houthoofd
+ *
+ */
+
 public class ObjectController {
-	JavaEngine game;
-	ArrayList<GameObject> objects;
-	ArrayList<GameObject> toAdd;
-	ArrayList<GameObject> toRemove;
+	private ArrayList<GameObject> objects;
+	private ArrayList<GameObject> toAdd;
+	private ArrayList<GameObject> toRemove;
 	
-	public ObjectController(JavaEngine game) {
-		this.game = game;
+	/**
+	 * Constructor. Sets up the object controller for use.
+	 */
+	
+	public ObjectController() {
 		objects = new ArrayList<GameObject>();
 		toAdd = new ArrayList<GameObject>();
 		toRemove = new ArrayList<GameObject>();
 	}
+	
+	/**
+	 * Adds a GameObject to the list of active game objects. Passes the controller to the object and
+	 *  adds to the list of objects to add.
+	 * @param obj GameObject to add
+	 */
 	
 	public void addObject(GameObject obj) {
 		obj.addObjectController(this);
 		toAdd.add(obj);
 	}
 	
+	/**
+	 * Adds a given GameObject to the list of objects to remove.
+	 * @param obj GameObject to remove
+	 */
+	
 	public void removeObject(GameObject obj) {
 		toRemove.add(obj);
 	}
+	
+	/**
+	 * Gets an array of all GameObjects in the game
+	 * @return Array of GameObjects
+	 */
 	
 	public GameObject[] getGameObjects() {
 		GameObject[] objs = new GameObject[objects.size()];
@@ -33,6 +58,12 @@ public class ObjectController {
 		}
 		return objs;
 	}
+	
+	/**
+	 * Gets an array of all GameObjects that contain a String tag
+	 * @param tagFilter filter
+	 * @return filtered GameObjects
+	 */
 	
 	public GameObject[] getGameObjects(String tagFilter) {
 		GameObject[] objs;
@@ -48,6 +79,11 @@ public class ObjectController {
 		}
 		return objs;
 	}
+	
+	/**
+	 * Calls the "startUpdate" function in all active GameObjects. After all objects are updated, 
+	 * removes all GameObjects queued to be removed, adds all GameObjects queued to be added.
+	 */
 	
 	void Update() {
 		
@@ -69,6 +105,12 @@ public class ObjectController {
 		toAdd.clear();
 		
 	}
+	
+	/**
+	 * Calls the render method in all GameObjects. GameObjects called in layer order, with lowest layer 
+	 * called before higher layers.
+	 * @param g Graphics object
+	 */
 	
 	void Render(Graphics g) {
 		HashMap<Integer, ArrayList<GameObject>> levels = new HashMap<Integer, ArrayList<GameObject>>();
