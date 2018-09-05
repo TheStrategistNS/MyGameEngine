@@ -13,9 +13,7 @@ import javax.swing.JFrame;
  */
 
 public class GameScreen extends JFrame {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 4944507058383316306L;
 	
 	private Insets insets;

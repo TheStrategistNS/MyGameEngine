@@ -13,22 +13,23 @@ import java.util.ArrayList;
  */
 
 public class JavaEngine implements Runnable {
-	private Thread t;
-	private String gameName;
+	private Thread t;								//Game thread
+	private String gameName;						//Game name
 	
-	public static JavaEngine instance;
+	public static JavaEngine instance;				//Running instance of the Java engine
 
-	private boolean isRunning, showPerform;
-	private long frame;
-	private GameScreen screen;
-	private ObjectController controller;
-	private ArrayList<GameScript> scripts;
+	private boolean isRunning;						//Is game running
+	private boolean showPerform;					//Show performance or not
+	private long frame;								//Current frame
+	private GameScreen screen;						//Game screen
+	private ObjectController controller;			//Object controller object
+	private ArrayList<GameScript> scripts;			//List of game scripts
 	
-	private int fps;
-	private int screenWidth, screenHeight;
-	private int gameWidth, gameHeight;
-	private KeyboardInputHandler keyboardInput;
-	private MouseInputHandler mouseInput;
+	private int fps;								//FPS to run at
+	private int screenWidth, screenHeight;			//Screen size
+	private int gameWidth, gameHeight;				//Game size
+	private KeyboardInputHandler keyboardInput;		//Keyboard input handler
+	private MouseInputHandler mouseInput;			//Mouse input handler
 	
 	/**
 	 * Sets up the engine for use.
@@ -45,7 +46,7 @@ public class JavaEngine implements Runnable {
 		
 		scripts = new ArrayList<GameScript>();
 		
-		controller = new ObjectController(this);
+		controller = new ObjectController();
 		
 		instance = this;
 		
@@ -169,9 +170,19 @@ public class JavaEngine implements Runnable {
 		return mouseInput;
 	}
 	
+	/**
+	 * Returns the object controller for the current instance.
+	 * @return ObjectController
+	 */
+	
 	public ObjectController getObjectController() {
 		return controller;
 	}
+	
+	/**
+	 * Gets the current frame the game is on. Used to measure time passed.
+	 * @return current frame
+	 */
 	
 	public long getFrame() {
 		return frame;
@@ -189,23 +200,50 @@ public class JavaEngine implements Runnable {
 		}
 	}
 	
+	/**
+	 * Sets how many units fit on the screen for the game. Different than screen size.
+	 * @param width width of game
+	 * @param height height of game
+	 */
+	
 	public void setGameSize(int width, int height) {
 		gameWidth = width;
 		gameHeight = height;
 	}
+	
+	/**
+	 * Sets the size of the game screen in pixels
+	 * @param width width in pixels
+	 * @param height height in pixels
+	 */
 	
 	public void setScreenSize(int width, int height) {
 		screenWidth = width;
 		screenHeight = height;
 	}
 	
+	/**
+	 * Sets whether the engine outputs the time taken for a frame in a console.
+	 * @param show true if yes
+	 */
+	
 	public void showPerformance(boolean show) {
 		showPerform = show;
 	}
 	
+	/**
+	 * Gets current X ratio of screen width to game width.
+	 * @return x ratio
+	 */
+	
 	public double getXRatio() {
 		return screenWidth / gameWidth;
 	}
+	
+	/**
+	 * Gets the current Y ratio of screen height to game height.
+	 * @return y ratio
+	 */
 	
 	public double getYRatio() {
 		return screenHeight / gameHeight;

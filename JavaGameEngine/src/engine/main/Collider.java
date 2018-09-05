@@ -2,9 +2,20 @@ package engine.main;
 
 import java.util.ArrayList;
 
+/**
+ * A collider component for a GameObject. Every frame, checks to see whether any other colliders intersect 
+ * with this one. Creates a collision event if so.
+ * @author Taylor Houthoofd
+ *
+ */
+
 public class Collider extends GameComponent {
 	private ArrayList<GameObject> previous, current;
 
+	/**
+	 * Constructor.
+	 */
+	
 	public Collider() {
 		super(GameComponent.COLLIDER);
 		previous = new ArrayList<GameObject>();
@@ -41,6 +52,12 @@ public class Collider extends GameComponent {
 		}
 		previous = current;
 	}
+	
+	/**
+	 * Checks whether the bounds of an object intersect with the attached object.
+	 * @param obj object to check
+	 * @return true if touching
+	 */
 	
 	private boolean checkTouching(GameObject obj) {
 		boolean touching = true;

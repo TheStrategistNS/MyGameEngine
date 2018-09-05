@@ -7,8 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.event.MouseInputListener;
 
 /**
- * 
- * TODO: Do something with this. Doesn't currently do anything but get attached to a component.
+ * Mouse input handler for the Java engine. When mouse clicks on the screen, sends a mouse event to any GameObjects 
+ * clicked on that are set to receive mouse events.
+ * @author Taylor Houthoofd
  *
  */
 
@@ -16,6 +17,12 @@ public class MouseInputHandler implements MouseInputListener {
 	JavaEngine game;
 	ObjectController controller;
 	JFrame frame;
+	
+	/**
+	 * Constructor.
+	 * @param c the game screen
+	 * @param game the JavaEngine object
+	 */
 
 	public MouseInputHandler(JFrame c, JavaEngine game) {
 		frame = c;
