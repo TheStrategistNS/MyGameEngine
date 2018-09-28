@@ -37,7 +37,7 @@ public class MouseInputHandler implements MouseInputListener {
 		System.out.printf("MouseClicked event at (%d, %d)\n",p.x, p.y);
 		GameObject[] objects = controller.getGameObjects("MouseInteract");
 		for(GameObject obj: objects) {
-			System.out.printf("Testing object at (%d, %d)\n",obj.getPos().x, obj.getPos().y);
+			//System.out.printf("Testing object at (%d, %d)\n",obj.getPos().x, obj.getPos().y);
 			if(obj.isTouching(p)) {
 				GameEvent click = new GameEvent(GameEvent.MOUSE_EVENT);
 				click.put("point", p);		

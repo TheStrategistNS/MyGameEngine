@@ -80,6 +80,11 @@ public class ObjectController {
 		return objs;
 	}
 	
+	public void clear() {
+		toAdd.clear();
+		toRemove.addAll(objects);
+	}
+	
 	/**
 	 * Calls the "startUpdate" function in all active GameObjects. After all objects are updated, 
 	 * removes all GameObjects queued to be removed, adds all GameObjects queued to be added.

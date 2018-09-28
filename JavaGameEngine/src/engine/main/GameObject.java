@@ -282,6 +282,11 @@ public abstract class GameObject {
 		}
 	}
 	
+	@Override
+	public String toString() {
+		return "ERROR:STRING_OUTPUT_NOT_SET_UP";
+	}
+	
 	//Protected methods
 	
 	/**
