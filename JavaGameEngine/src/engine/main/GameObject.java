@@ -1,7 +1,6 @@
 package engine.main;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 
@@ -239,22 +238,6 @@ public abstract class GameObject {
 		GameEvent e = new GameEvent(GameEvent.ON_DESTROY);
 		triggerEvent(this, e);
 		controller.removeObject(this);
-	}
-	
-	/**
-	 * Renders the object to the screen using its SpriteGraphic object. If SpriteGraphic is not set up, 
-	 * kills the object.
-	 * @param g Graphics object used to render to screen.
-	 */
-	
-	public void Render(Graphics g) {
-		if(graphic.isReady()) {
-			graphic.Render(g, pos.x, pos.y);
-		}
-		else {
-			System.err.println("Trying to render object not set up. Deleteing object.");
-			kill();
-		}
 	}
 	
 	/**

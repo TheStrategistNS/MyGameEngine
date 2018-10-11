@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 public class SpriteGraphic {
 	private BufferedImage graphic;
 	private int width, height;
+	private boolean vis;
 	
 	/**
 	 * Constructor.
@@ -26,6 +27,7 @@ public class SpriteGraphic {
 	public SpriteGraphic(int width, int height) {
 		this.width = (int)(width * JavaEngine.instance.getXRatio());
 		this.height = (int)(height * JavaEngine.instance.getYRatio());
+		vis = true;
 	}
 	
 	/**
@@ -36,9 +38,11 @@ public class SpriteGraphic {
 	 */
 	
 	public void Render(Graphics g, int x, int y) {
-		x *= JavaEngine.instance.getXRatio();
-		y *= JavaEngine.instance.getYRatio();
-		g.drawImage(graphic, x, y, width, height, null);
+		if(vis && isReady()) {
+			x *= JavaEngine.instance.getXRatio();
+			y *= JavaEngine.instance.getYRatio();
+			g.drawImage(graphic, x, y, width, height, null);
+		}
 	}
 	
 	/**
@@ -69,10 +73,14 @@ public class SpriteGraphic {
 	 * @return true if set up
 	 */
 	
-	public boolean isReady() {
+	private boolean isReady() {
 		if(graphic != null) {
 			return true;
 		}
 		return false;
+	}
+	
+	public void setVisible(boolean visible) {
+		vis = visible;
 	}
 }

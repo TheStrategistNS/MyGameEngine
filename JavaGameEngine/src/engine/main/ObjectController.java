@@ -1,8 +1,8 @@
 package engine.main;
 
-import java.awt.Graphics;
+//import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.HashMap;
+//import java.util.HashMap;
 
 /**
  * <p>Manages all GameObjects in the game.</p><p>Holds all active game objects. Updates and renders each object each frame. 
@@ -116,7 +116,7 @@ public class ObjectController {
 	 * called before higher layers.
 	 * @param g Graphics object
 	 */
-	
+	/*
 	void Render(Graphics g) {
 		HashMap<Integer, ArrayList<GameObject>> levels = new HashMap<Integer, ArrayList<GameObject>>();
 		for(GameObject obj:objects) {
@@ -136,4 +136,5 @@ public class ObjectController {
 			}
 		}
 	}
+	*/
 }

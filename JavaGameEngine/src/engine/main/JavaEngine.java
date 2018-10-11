@@ -30,6 +30,7 @@ public class JavaEngine implements Runnable {
 	private int gameWidth, gameHeight;				//Game size
 	private KeyboardInputHandler keyboardInput;		//Keyboard input handler
 	private MouseInputHandler mouseInput;			//Mouse input handler
+	private Camera camera;
 	
 	/**
 	 * Sets up the engine for use.
@@ -41,7 +42,9 @@ public class JavaEngine implements Runnable {
 		showPerform = false;
 		
 		screenWidth = 800;
+		gameWidth = 800;
 		screenHeight = 600;
+		gameHeight = 600;
 		fps = 60;
 		
 		scripts = new ArrayList<GameScript>();
@@ -109,6 +112,7 @@ public class JavaEngine implements Runnable {
 		
 		mouseInput = new MouseInputHandler(screen, this);
 		keyboardInput = new KeyboardInputHandler(screen);
+		camera = new Camera();
 		
 		for(GameScript script: scripts) {
 			script.init();
@@ -137,7 +141,7 @@ public class JavaEngine implements Runnable {
 		BufferedImage backbuffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_RGB);
 		Graphics bbg = backbuffer.getGraphics();
 		
-		controller.Render(bbg);
+		camera.render(bbg);
 		
 		for(GameScript script: scripts) {
 			script.render(bbg);
@@ -253,4 +257,15 @@ public class JavaEngine implements Runnable {
 		return screenHeight / gameHeight;
 	}
 	
+	int getGameWidth() {
+		return gameWidth;
+	}
+	
+	int getGameHeight() {
+		return gameHeight;
+	}
+	
+	public Camera getCamera() {
+		return camera;
+	}
 }
