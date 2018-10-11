@@ -97,7 +97,7 @@ public class JavaEngine implements Runnable {
 		System.out.printf("Initializing %d scripts...\n", scripts.size());
 		
 		for(GameScript script: scripts) {
-			script.init();
+			script.preInit();
 		}
 		
 		if(screenWidth < gameWidth || screenHeight < gameHeight) {
@@ -109,6 +109,10 @@ public class JavaEngine implements Runnable {
 		
 		mouseInput = new MouseInputHandler(screen, this);
 		keyboardInput = new KeyboardInputHandler(screen);
+		
+		for(GameScript script: scripts) {
+			script.init();
+		}
 	}
 	
 	/**
