@@ -11,7 +11,13 @@ import java.awt.Graphics;
 public interface GameScript {
 	
 	/**
-	 * Called once when the game starts.
+	 * Called once when the game starts, before the game screen is initialized.
+	 */
+	
+	public abstract void preInit();
+	
+	/**
+	 * Called once when the game starts, after the game screen is initialized.
 	 */
 	
 	public abstract void init();
