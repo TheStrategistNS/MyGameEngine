@@ -11,13 +11,13 @@ import java.awt.Graphics;
 public interface GameScript {
 	
 	/**
-	 * Called once when the game starts, before the game screen is initialized.
+	 * Called once when the engine is setting up. This is the place to set engine variables.
 	 */
 	
 	public abstract void preInit();
 	
 	/**
-	 * Called once when the game starts, after the game screen is initialized.
+	 * Called once when the game starts.
 	 */
 	
 	public abstract void init();
