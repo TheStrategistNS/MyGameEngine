@@ -64,5 +64,9 @@ public class KeyboardInputHandler implements KeyListener {
 	public void keyTyped(KeyEvent e) {
 		
 	}
+	
+	public void reset() {
+		keys = new boolean[256];
+	}
 
 }

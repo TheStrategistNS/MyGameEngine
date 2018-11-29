@@ -34,4 +34,10 @@ public interface GameScript {
 	 */
 	
 	public abstract void render(Graphics g);
+	
+	/**
+	 * Called when the user attempts to exit the program.
+	 */	
+	
+	public abstract void onExit();
 }
