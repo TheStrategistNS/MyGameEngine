@@ -17,6 +17,7 @@ public class MouseInputHandler implements MouseInputListener {
 	JavaEngine game;
 	ObjectController controller;
 	JFrame frame;
+	private Point pos;
 	
 	/**
 	 * Constructor.
@@ -31,10 +32,10 @@ public class MouseInputHandler implements MouseInputListener {
 		controller = game.getObjectController();
 	}
 	
-	public void mouseClicked(MouseEvent e) {
+	public void mouseClicked(MouseEvent e) {/*
 		Point p = new Point((e.getX() - frame.getInsets().left) / (int)game.getXRatio(), (e. getY() - frame.getInsets().top) / (int)game.getYRatio());
 		
-		System.out.printf("MouseClicked event at (%d, %d)\n",p.x, p.y);
+		//System.out.printf("MouseClicked event at (%d, %d)\n",p.x, p.y);
 		GameObject[] objects = controller.getGameObjects("MouseInteract");
 		for(GameObject obj: objects) {
 			//System.out.printf("Testing object at (%d, %d)\n",obj.getPos().x, obj.getPos().y);
@@ -45,7 +46,7 @@ public class MouseInputHandler implements MouseInputListener {
 				click.put("y", p.y);
 				obj.triggerEvent(null, click);
 			}
-		}
+		}*/
 	}
 
 	public void mouseEntered(MouseEvent e) {
@@ -57,11 +58,25 @@ public class MouseInputHandler implements MouseInputListener {
 	}
 
 	public void mousePressed(MouseEvent e) {
-
+		Point p = new Point((e.getX() - frame.getInsets().left) / (int)game.getXRatio(), (e. getY() - frame.getInsets().top) / (int)game.getYRatio());
+		pos = p;
 	}
 
 	public void mouseReleased(MouseEvent e) {
-
+		Point p = new Point((e.getX() - frame.getInsets().left) / (int)game.getXRatio(), (e. getY() - frame.getInsets().top) / (int)game.getYRatio());
+		if(Math.abs(pos.getX() - p.getX()) < 2 && Math.abs(pos.getY() - p.getY()) < 2) {
+			GameObject[] objects = controller.getGameObjects("MouseInteract");
+			for(GameObject obj:objects) {
+				if(obj.isTouching(p)) {
+					GameEvent click = new GameEvent(GameEvent.MOUSE_EVENT);
+					click.put("type", "click");
+					click.put("point", p);
+					click.put("x", p.x);
+					click.put("y", p.y);
+					obj.triggerEvent(null, click);
+				}
+			}
+		}
 	}
 
 	public void mouseDragged(MouseEvent e) {

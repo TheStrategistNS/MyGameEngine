@@ -42,7 +42,11 @@ public class JavaEngine implements Runnable {
 		
 		screenWidth = 800;
 		screenHeight = 600;
+		
+		gameHeight = 80;
+		screenHeight = 60;
 		fps = 60;
+		frame = 0;
 		
 		scripts = new ArrayList<GameScript>();
 		
@@ -61,6 +65,8 @@ public class JavaEngine implements Runnable {
 		System.out.println("Game initializing...");
 		init();
 		
+		long timeCycle = 0;
+		
 		System.out.println("Game running...");
 		while(isRunning) {
 			long time = System.currentTimeMillis();
@@ -70,8 +76,12 @@ public class JavaEngine implements Runnable {
 			
 			time = (1000 / fps) - (System.currentTimeMillis() - time);
 			
-			if(showPerform && frame % fps == 0) {
-				System.out.printf("frame %d completed with time of %d\n", frame, time * -1);
+			if(showPerform) {
+				timeCycle += time*-1;
+				if(frame%fps==0) {
+					System.out.printf("Average frame time of %s.\n", timeCycle/fps);
+					timeCycle=0;
+				}
 			}
 			
 			if(time > 0) {
@@ -83,7 +93,14 @@ public class JavaEngine implements Runnable {
 		}
 		
 		System.out.println("Game stopping...");
-		screen.setVisible(false);
+		screen.dispose();
+	}
+	
+	public void exit() {
+		for(GameScript script:scripts) {
+			script.onExit();
+		}
+		isRunning = false;
 	}
 	
 	/**
