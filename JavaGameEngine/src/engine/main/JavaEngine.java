@@ -1,5 +1,6 @@
 package engine.main;
 
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -13,13 +14,14 @@ import java.util.ArrayList;
  */
 
 public class JavaEngine implements Runnable {
-	private Thread t;								//Game thread
+	Thread thread;								//Game thread
 	private String gameName;						//Game name
 	
 	public static JavaEngine instance;				//Running instance of the Java engine
 
 	private boolean isRunning;						//Is game running
 	private boolean showPerform;					//Show performance or not
+	private boolean exitSuccess;
 	private long frame;								//Current frame
 	private GameScreen screen;						//Game screen
 	private ObjectController controller;			//Object controller object
@@ -39,6 +41,7 @@ public class JavaEngine implements Runnable {
 	public JavaEngine(String name) {
 		gameName = name;
 		showPerform = false;
+		exitSuccess = false;
 		
 		screenWidth = 800;
 		screenHeight = 600;
@@ -62,6 +65,8 @@ public class JavaEngine implements Runnable {
 	 */
 
 	public void run() {
+		new CrashMonitor(this);
+		
 		System.out.println("Game initializing...");
 		init();
 		
@@ -94,13 +99,20 @@ public class JavaEngine implements Runnable {
 		
 		System.out.println("Game stopping...");
 		screen.dispose();
+		
+		exitSuccess = true;
 	}
 	
 	public void exit() {
-		for(GameScript script:scripts) {
-			script.onExit();
+		if(thread.isAlive()) {
+			for(GameScript script:scripts) {
+				script.onExit();
+			}
+			isRunning = false;
 		}
-		isRunning = false;
+		else {
+			System.exit(1);
+		}
 	}
 	
 	/**
@@ -215,9 +227,9 @@ public class JavaEngine implements Runnable {
 	
 	public void start() {
 		System.out.printf("Thread '%s' starting...\n", gameName);
-		if(t == null) {
-			t = new Thread(this, gameName);
-			t.start();
+		if(thread == null) {
+			thread = new Thread(this, gameName);
+			thread.start();
 		}
 	}
 	
@@ -268,6 +280,14 @@ public class JavaEngine implements Runnable {
 	
 	public double getYRatio() {
 		return screenHeight / gameHeight;
+	}
+	
+	public void addScreenComponent(Component c) {
+		screen.addComponent(c);
+	}
+	
+	public boolean exitedSuccessfully() {
+		return exitSuccess;
 	}
 	
 }

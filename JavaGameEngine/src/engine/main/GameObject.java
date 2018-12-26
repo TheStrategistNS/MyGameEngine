@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public abstract class GameObject {
 	private static final int DEFAULT_DRAW_LEVEL = 5;
 	
-	protected Point pos;
+	protected Coord pos;
 	private Point com;
 	protected Dimension size;
 	private ObjectController controller;
@@ -33,7 +33,7 @@ public abstract class GameObject {
 	 * @param size size of object
 	 */
 	
-	public GameObject(Point pos, Dimension size) {
+	public GameObject(Coord pos, Dimension size) {
 		this.pos = pos;
 		this.size = size;
 		intantiation();
@@ -47,7 +47,7 @@ public abstract class GameObject {
 	 */
 	
 	public GameObject(int x, int y, Dimension size) {
-		pos = new Point(x, y);
+		pos = new Coord(x, y);
 		this.size = size;
 		intantiation();
 	}
@@ -59,7 +59,7 @@ public abstract class GameObject {
 	 * @param height height of object
 	 */
 	
-	public GameObject(Point pos, int width, int height) {
+	public GameObject(Coord pos, int width, int height) {
 		this.pos = pos;
 		size = new Dimension(width, height);
 		intantiation();
@@ -74,7 +74,7 @@ public abstract class GameObject {
 	 */
 	
 	public GameObject(int x, int y, int width, int height) {
-		pos = new Point(x, y);
+		pos = new Coord(x, y);
 		size = new Dimension(width, height);
 		intantiation();
 	}
@@ -131,8 +131,12 @@ public abstract class GameObject {
 	 * @return position
 	 */
 	
-	public Point getPos() {
+	public Coord getPos() {
 		return pos;
+	}
+	
+	public Point getPosP() {
+		return new Point((int)pos.x,(int)pos.y);
 	}
 	
 	/**
@@ -140,8 +144,13 @@ public abstract class GameObject {
 	 * @param newPos new position of object
 	 */
 	
-	public void setPos(Point newPos) {
+	public void setPos(Coord newPos) {
 		pos = newPos;
+		recalcCom();
+	}
+	
+	public void setPos(Point newPos) {
+		pos = new Coord(newPos.x,newPos.y);
 		recalcCom();
 	}
 	
@@ -152,7 +161,12 @@ public abstract class GameObject {
 	 */
 	
 	public void setPos(int x, int y) {
-		pos = new Point(x, y);
+		pos = new Coord(x, y);
+		recalcCom();
+	}
+	
+	public void setPos(double x, double y) {
+		pos = new Coord(x, y);
 		recalcCom();
 	}
 	
@@ -163,6 +177,12 @@ public abstract class GameObject {
 	 */
 	
 	public void incPos(int x, int y) {
+		pos.x += x;
+		pos.y += y;
+		recalcCom();
+	}
+	
+	public void incPos(double x, double y) {
 		pos.x += x;
 		pos.y += y;
 		recalcCom();
@@ -249,7 +269,7 @@ public abstract class GameObject {
 	
 	public void Render(Graphics g) {
 		if(graphic.isReady()) {
-			graphic.Render(g, pos.x, pos.y);
+			graphic.Render(g, (int)pos.x, (int)pos.y);
 		}
 		else {
 			System.err.println("Trying to render object not set up. Deleteing object.");
@@ -343,8 +363,8 @@ public abstract class GameObject {
 	
 	private void recalcCom() {
 		int x, y;
-		x = pos.x + (size.width / 2);
-		y = pos.y + (size.height / 2);
+		x = (int)(pos.x + (size.width / 2));
+		y = (int)(pos.y + (size.height / 2));
 		com = new Point(x, y);
 	}
 	
