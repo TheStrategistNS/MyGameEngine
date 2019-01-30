@@ -1,6 +1,5 @@
 package engine.main;
 
-import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ public class JavaEngine implements Runnable {
 	Thread thread;								//Game thread
 	private String gameName;						//Game name
 	
-	public static JavaEngine instance;				//Running instance of the Java engine
+	private static JavaEngine instance;				//Running instance of the Java engine
 
 	private boolean isRunning;						//Is game running
 	private boolean showPerform;					//Show performance or not
@@ -103,12 +102,16 @@ public class JavaEngine implements Runnable {
 		exitSuccess = true;
 	}
 	
-	public void exit() {
-		if(thread.isAlive()) {
-			for(GameScript script:scripts) {
+	/**
+	 * Exits the current instance of the engine.
+	 */
+	
+	public static void exit() {
+		if(instance.thread.isAlive()) {
+			for(GameScript script:instance.scripts) {
 				script.onExit();
 			}
-			isRunning = false;
+			instance.isRunning = false;
 		}
 		else {
 			System.exit(1);
@@ -186,12 +189,21 @@ public class JavaEngine implements Runnable {
 	}
 	
 	/**
+	 * Gets the current instance of the engine.
+	 * @return instance
+	 */
+	
+	public static JavaEngine getCurrentInstance() {
+		return instance;
+	}
+	
+	/**
 	 * Gets the keyboard input handler for the screen.
 	 * @return Keyboard handler.
 	 */
 	
-	public KeyboardInputHandler getKeyboardInput() {
-		return keyboardInput;
+	public static KeyboardInputHandler getKeyboardInput() {
+		return instance.keyboardInput;
 	}
 	
 	/**
@@ -199,8 +211,8 @@ public class JavaEngine implements Runnable {
 	 * @return Mouse handler.
 	 */
 	
-	public MouseInputHandler getMouseInput() {
-		return mouseInput;
+	public static MouseInputHandler getMouseInput() {
+		return instance.mouseInput;
 	}
 	
 	/**
@@ -208,8 +220,8 @@ public class JavaEngine implements Runnable {
 	 * @return ObjectController
 	 */
 	
-	public ObjectController getObjectController() {
-		return controller;
+	public static ObjectController getObjectController() {
+		return instance.controller;
 	}
 	
 	/**
@@ -217,8 +229,8 @@ public class JavaEngine implements Runnable {
 	 * @return current frame
 	 */
 	
-	public long getFrame() {
-		return frame;
+	public static long getFrame() {
+		return instance.frame;
 	}
 	
 	/**
@@ -256,6 +268,42 @@ public class JavaEngine implements Runnable {
 	}
 	
 	/**
+	 * Gets the current width of the game screen in pixels
+	 * @return width in pixels
+	 */
+	
+	public static int getScreenWidth() {
+		return instance.screenWidth;
+	}
+	
+	/**
+	 * Gets the current height of the game screen in pixels
+	 * @return height in pixels
+	 */
+	
+	public static int getScreenHeight() {
+		return instance.screenHeight;
+	}
+	
+	/**
+	 * Gets the current width of the game displayed. This is the width of the game itself, not the screen
+	 * @return width
+	 */
+	
+	public static int getGameWidth() {
+		return instance.gameWidth;
+	}
+	
+	/**
+	 * Gets the current height of the game displayed. This is the height of the game itself, not the screen
+	 * @return height
+	 */
+	
+	public static int getGameHeight() {
+		return instance.gameHeight;
+	}
+	
+	/**
 	 * Sets whether the engine outputs the time taken for a frame in a console.
 	 * @param show true if yes
 	 */
@@ -269,8 +317,8 @@ public class JavaEngine implements Runnable {
 	 * @return x ratio
 	 */
 	
-	public double getXRatio() {
-		return screenWidth / gameWidth;
+	public static double getXRatio() {
+		return instance.screenWidth / instance.gameWidth;
 	}
 	
 	/**
@@ -278,12 +326,8 @@ public class JavaEngine implements Runnable {
 	 * @return y ratio
 	 */
 	
-	public double getYRatio() {
-		return screenHeight / gameHeight;
-	}
-	
-	public void addScreenComponent(Component c) {
-		screen.addComponent(c);
+	public static double getYRatio() {
+		return instance.screenHeight / instance.gameHeight;
 	}
 	
 	public boolean exitedSuccessfully() {

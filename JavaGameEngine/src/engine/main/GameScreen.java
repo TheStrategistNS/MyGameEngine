@@ -77,7 +77,7 @@ public class GameScreen extends JFrame {
 		@Override
 		public void windowClosing(WindowEvent arg0) {
 			// TODO Auto-generated method stub
-			JavaEngine.instance.exit();
+			JavaEngine.exit();
 		}
 
 		@Override

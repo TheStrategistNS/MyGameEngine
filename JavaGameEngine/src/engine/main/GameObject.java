@@ -15,7 +15,7 @@ public abstract class GameObject {
 	private static final int DEFAULT_DRAW_LEVEL = 5;
 	
 	protected Coord pos;
-	private Point com;
+	private Coord com;
 	protected Dimension size;
 	private ObjectController controller;
 	private int drawLevel;
@@ -193,7 +193,7 @@ public abstract class GameObject {
 	 * @return center of mass
 	 */
 	
-	public Point getCom() {
+	public Coord getCom() {
 		return com;
 	}
 	
@@ -365,7 +365,7 @@ public abstract class GameObject {
 		int x, y;
 		x = (int)(pos.x + (size.width / 2));
 		y = (int)(pos.y + (size.height / 2));
-		com = new Point(x, y);
+		com = new Coord(x, y);
 	}
 	
 	//Abstract methods
