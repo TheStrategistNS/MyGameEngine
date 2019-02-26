@@ -96,6 +96,10 @@ public class JavaEngine implements Runnable {
 		screen.dispose();
 	}
 	
+	/**
+	 * Exits the game.
+	 */
+	
 	public void exit() {
 		for(GameScript script:scripts) {
 			script.onExit();
