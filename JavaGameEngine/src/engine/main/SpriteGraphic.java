@@ -1,7 +1,7 @@
  package engine.main;
 
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
+import java.awt.Image;
 
 /**
  * The graphic object associated with a GameObject. Describes the appearance of the GameObject. 
@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
  */
 
 public class SpriteGraphic {
-	private BufferedImage graphic;
+	private Image graphic;
 	private int width, height;
 	
 	/**

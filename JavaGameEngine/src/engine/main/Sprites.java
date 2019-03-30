@@ -23,7 +23,7 @@ public class Sprites {
 	}
 	
 	public static void putSprite(String name, Sprite sprite) {
-		
+		instance.images.put(name, sprite.getBI());
 	}
 	
 	public static Sprite getSprite(String name, Dimension size) {

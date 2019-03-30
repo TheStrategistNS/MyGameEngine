@@ -178,6 +178,15 @@ public abstract class GameObject {
 	}
 	
 	/**
+	 * Returns the object's size.
+	 * @return size
+	 */
+	
+	public Dimension getSize() {
+		return size;
+	}
+	
+	/**
 	 * Gets all String tags associated with this object.
 	 * @return tags
 	 */

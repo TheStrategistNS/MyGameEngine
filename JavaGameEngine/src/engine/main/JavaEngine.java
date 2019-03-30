@@ -19,6 +19,7 @@ public class JavaEngine implements Runnable {
 	public static JavaEngine instance;				//Running instance of the Java engine
 
 	private boolean isRunning;						//Is game running
+	private boolean isFinished;						//IS game exited
 	private boolean showPerform;					//Show performance or not
 	private long frame;								//Current frame
 	private GameScreen screen;						//Game screen
@@ -93,6 +94,7 @@ public class JavaEngine implements Runnable {
 		}
 		
 		System.out.println("Game stopping...");
+		isFinished = true;
 		screen.dispose();
 	}
 	
@@ -113,7 +115,10 @@ public class JavaEngine implements Runnable {
 	
 	private void init() {
 		isRunning = true;
+		isFinished = false;
 		frame = 0;
+		
+		new CrashMonitor();
 		
 		System.out.printf("Initializing %d scripts...\n", scripts.size());
 		
@@ -272,6 +277,10 @@ public class JavaEngine implements Runnable {
 	
 	public double getYRatio() {
 		return screenHeight / gameHeight;
+	}
+	
+	public static boolean isFinished() {
+		return instance.isFinished;
 	}
 	
 }

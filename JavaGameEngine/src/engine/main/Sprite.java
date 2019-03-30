@@ -6,10 +6,14 @@ import java.awt.image.BufferedImage;
 
 public class Sprite {
 
-	private BufferedImage g;
+	private Image g;
+	
+	public Sprite() {
+		g = new BufferedImage(100,100,BufferedImage.TYPE_INT_RGB);
+	}
 	
 	public Sprite(Image img) {
-		g = (BufferedImage)img;
+		g = img;
 	}
 	
 	public Sprite(Sprite other) {
@@ -20,7 +24,7 @@ public class Sprite {
 		return g.getGraphics();
 	}
 	
-	public BufferedImage getBI() {
+	public Image getBI() {
 		return g;
 	}
 }
