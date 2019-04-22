@@ -51,7 +51,15 @@ public class GameEvent {
 	}
 	
 	/**
-	 * Get the data item associated with a String key.
+	 * <p>Get the data item associated with a String key.</p>
+	 * <p>Each event has its own data associated with it, as follows:</p>
+	 * <ul>
+	 * 	<li>Collision:
+	 * 	<ul>
+	 * 		<li>"object" - (GameObject) object colliding.</li>
+	 * 		<li>"type" - (String) type of collision. Can be "onEnter" for first touch, or "touching" if it is still touching from a previous frame.</li>
+	 * 	</ul>
+	 * </ul>
 	 * @param key key for item
 	 * @return data item
 	 */

@@ -19,7 +19,10 @@ public class JavaEngine implements Runnable {
 	public static JavaEngine instance;				//Running instance of the Java engine
 
 	private boolean isRunning;						//Is game running
-	private boolean isFinished;						//IS game exited
+	private boolean paused;							//Is game paused
+	private boolean pausedForThread;
+	private Thread threadPause;
+	private boolean isFinished;						//Is game exited
 	private boolean showPerform;					//Show performance or not
 	private long frame;								//Current frame
 	private GameScreen screen;						//Game screen
@@ -69,13 +72,35 @@ public class JavaEngine implements Runnable {
 		long timeCycle = 0;
 		
 		System.out.println("Game running...");
-		while(isRunning) {
-			long time = System.currentTimeMillis();
+		
+		long time = 0;
+		
+		while(isRunning) {			
+			time = (1000 / fps) - (System.currentTimeMillis() - time);
+			
+			if(time > 0) {
+				try {
+					Thread.sleep(time);
+				}
+				catch(Exception e) {}
+			}
+			
+			time = System.currentTimeMillis();
+			
+			if(paused) {
+				continue;
+			}
+			else if(pausedForThread) {
+				try {
+					threadPause.join();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				pausedForThread = false;
+			}
 			
 			update();
 			render();
-			
-			time = (1000 / fps) - (System.currentTimeMillis() - time);
 			
 			if(showPerform) {
 				timeCycle += time*-1;
@@ -83,13 +108,6 @@ public class JavaEngine implements Runnable {
 					System.out.printf("Average frame time of %s.\n", timeCycle/fps);
 					timeCycle=0;
 				}
-			}
-			
-			if(time > 0) {
-				try {
-					Thread.sleep(time);
-				}
-				catch(Exception e) {}
 			}
 		}
 		
@@ -115,6 +133,8 @@ public class JavaEngine implements Runnable {
 	
 	private void init() {
 		isRunning = true;
+		paused = false;
+		pausedForThread = false;
 		isFinished = false;
 		frame = 0;
 		
@@ -268,6 +288,15 @@ public class JavaEngine implements Runnable {
 	
 	public double getXRatio() {
 		return screenWidth / gameWidth;
+	}
+	
+	public static void setPaused(boolean pause) {
+		instance.paused = pause;
+	}
+	
+	public static void pauseForThread(Thread t) {
+		instance.threadPause = t;
+		instance.pausedForThread = true;
 	}
 	
 	/**
