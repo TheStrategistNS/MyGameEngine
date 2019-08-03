@@ -42,6 +42,11 @@ public class GameScreen extends JFrame {
 		setSize(insets.left + width + insets.right, insets.top + height + insets.bottom);
 	}
 	
+	/**
+	 * Adds the given component to the screen.
+	 * @param c component
+	 */
+	
 	public void addComponent(Component c) {
 		if(c != null) {
 			c.setLocation(c.getLocation().x + insets.left, c.getLocation().y + insets.top);

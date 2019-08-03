@@ -28,7 +28,7 @@ public abstract class GameObject {
 	//Constructors
 	
 	/**
-	 * Constructor.
+	 * Creates a GameObject with specified size and position.
 	 * @param pos position in game of object
 	 * @param size size of object
 	 */
@@ -39,6 +39,12 @@ public abstract class GameObject {
 		instantiation();
 	}
 	
+	/**
+	 * Creates a GameObject with specified size and position.
+	 * @param pos position in game of object
+	 * @param size size of object
+	 */
+	
 	public GameObject(Point pos, Dimension size) {
 		this.pos = new Coord(pos);
 		this.size = size;
@@ -46,7 +52,7 @@ public abstract class GameObject {
 	}
 	
 	/**
-	 * Constructor.
+	 * Creates a GameObject with specified size and position.
 	 * @param x x position in game of object
 	 * @param y y position in game of object
 	 * @param size size of object
@@ -59,7 +65,7 @@ public abstract class GameObject {
 	}
 	
 	/**
-	 * Constructor.
+	 * Creates a GameObject with specified size and position.
 	 * @param pos position in game of object
 	 * @param width width of object
 	 * @param height height of object
@@ -71,6 +77,13 @@ public abstract class GameObject {
 		instantiation();
 	}
 	
+	/**
+	 * Creates a GameObject with specified size and position.
+	 * @param pos pos position in game of object
+	 * @param width width of object
+	 * @param height height of object
+	 */
+	
 	public GameObject(Point pos, int width, int height) {
 		this.pos = new Coord(pos);
 		size = new Dimension(width, height);
@@ -78,7 +91,7 @@ public abstract class GameObject {
 	}
 	
 	/**
-	 * Constructor.
+	 * Creates a GameObject with specified size and position.
 	 * @param x x position in game of object
 	 * @param y y position in game of object
 	 * @param width width of object
@@ -156,6 +169,11 @@ public abstract class GameObject {
 		pos = newPos;
 		recalcCom();
 	}
+	
+	/**
+	 * Sets the position of the object and recalculates center of mass.
+	 * @param newPos new position of object
+	 */
 	
 	public void setPos(Point newPos) {
 		pos = new Coord(newPos);
@@ -306,11 +324,6 @@ public abstract class GameObject {
 		}else{
 			removeTag("MouseInteract");
 		}
-	}
-	
-	@Override
-	public String toString() {
-		return "ERROR:STRING_OUTPUT_NOT_SET_UP";
 	}
 	
 	//Protected methods
