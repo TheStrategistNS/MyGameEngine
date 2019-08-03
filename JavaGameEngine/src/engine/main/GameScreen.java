@@ -1,5 +1,6 @@
 package engine.main;
 
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.WindowEvent;
@@ -35,8 +36,17 @@ public class GameScreen extends JFrame {
 		this.setVisible(true);
 		this.addWindowListener(new windowListener());
 		
+		setLayout(null);
+		
 		insets = this.getInsets();
 		setSize(insets.left + width + insets.right, insets.top + height + insets.bottom);
+	}
+	
+	public void addComponent(Component c) {
+		if(c != null) {
+			c.setLocation(c.getLocation().x + insets.left, c.getLocation().y + insets.top);
+			this.add(c);
+		}
 	}
 	
 	/**
@@ -67,7 +77,7 @@ public class GameScreen extends JFrame {
 		@Override
 		public void windowClosing(WindowEvent arg0) {
 			// TODO Auto-generated method stub
-			JavaEngine.instance.exit();
+			JavaEngine.exit();
 		}
 
 		@Override

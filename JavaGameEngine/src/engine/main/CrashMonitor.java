@@ -1,26 +1,27 @@
 package engine.main;
 
-public class CrashMonitor implements Runnable {
-	private Thread monitor;
-	private Thread game;
+public class CrashMonitor implements Runnable{
+	Thread t;
+	JavaEngine e;
 	
-	public CrashMonitor() {
-		game = Thread.currentThread();
-		monitor = new Thread(this,"Crash_Monitor");
-		monitor.start();
+	public CrashMonitor(JavaEngine engine) {
+		e = engine;
+		t = new Thread(this, "CrashMonitor");
+		t.start();
 	}
 	
+	@Override
 	public void run() {
 		try {
-			game.join();
-			if(!JavaEngine.isFinished()) {
+			e.thread.join();
+			if(!e.exitedSuccessfully()) {
 				System.err.println("Crash detected!");
-				System.err.println("Closing program.");
 				System.exit(1);
 			}
 		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
-
 }

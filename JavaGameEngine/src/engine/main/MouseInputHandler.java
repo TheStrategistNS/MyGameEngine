@@ -60,6 +60,18 @@ public class MouseInputHandler implements MouseInputListener {
 	public void mousePressed(MouseEvent e) {
 		Point p = new Point((e.getX() - frame.getInsets().left) / (int)game.getXRatio(), (e. getY() - frame.getInsets().top) / (int)game.getYRatio());
 		pos = p;
+
+		GameObject[] objects = controller.getGameObjects("MouseInteract");
+		for(GameObject obj:objects) {
+			if(obj.isTouching(p)) {
+				GameEvent click = new GameEvent(GameEvent.MOUSE_EVENT);
+				click.put("type", "mousePressed");
+				click.put("point", p);
+				click.put("x", p.x);
+				click.put("y", p.y);
+				obj.triggerEvent(null, click);
+			}
+		}
 	}
 
 	public void mouseReleased(MouseEvent e) {
@@ -70,6 +82,25 @@ public class MouseInputHandler implements MouseInputListener {
 				if(obj.isTouching(p)) {
 					GameEvent click = new GameEvent(GameEvent.MOUSE_EVENT);
 					click.put("type", "click");
+					click.put("point", p);
+					click.put("x", p.x);
+					click.put("y", p.y);
+					obj.triggerEvent(null, click);
+					click = new GameEvent(GameEvent.MOUSE_EVENT);
+					click.put("type", "mouseReleased");
+					click.put("point", p);
+					click.put("x", p.x);
+					click.put("y", p.y);
+					obj.triggerEvent(null, click);
+				}
+			}
+		}
+		else {
+			GameObject[] objects = controller.getGameObjects("MouseInteract");
+			for(GameObject obj:objects) {
+				if(obj.isTouching(p)) {
+					GameEvent click = new GameEvent(GameEvent.MOUSE_EVENT);
+					click.put("type", "mouseReleased");
 					click.put("point", p);
 					click.put("x", p.x);
 					click.put("y", p.y);

@@ -22,7 +22,7 @@ public class Collider extends GameComponent {
 	}
 	
 	public void Update() {
-		GameObject[] objs = JavaEngine.instance.getObjectController().getGameObjects("Collidable");
+		GameObject[] objs = JavaEngine.getObjectController().getGameObjects("Collidable");
 		current = new ArrayList<GameObject>();
 		//if(JavaEngine.instance.getFrame() % 180 == 0) {
 		//	System.out.println(objs.length+" objects with collider");
