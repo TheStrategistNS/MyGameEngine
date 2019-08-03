@@ -80,6 +80,10 @@ public class ObjectController {
 		return objs;
 	}
 	
+	/**
+	 * Removes all GameObjects from the game.
+	 */
+	
 	public void clear() {
 		toAdd.clear();
 		toRemove.addAll(objects);

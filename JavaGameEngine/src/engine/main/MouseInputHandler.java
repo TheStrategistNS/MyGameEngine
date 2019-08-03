@@ -24,13 +24,16 @@ public class MouseInputHandler implements MouseInputListener {
 	 * @param c the game screen
 	 * @param game the JavaEngine object
 	 */
-
 	public MouseInputHandler(JFrame c, JavaEngine game) {
 		frame = c;
 		c.addMouseListener(this);
 		this.game = game;
-		controller = game.getObjectController();
+		controller = JavaEngine.getObjectController();
 	}
+	
+	/**
+	 * Non-functional. Old way of detecting mouse clicks.
+	 */
 	
 	public void mouseClicked(MouseEvent e) {/*
 		Point p = new Point((e.getX() - frame.getInsets().left) / (int)game.getXRatio(), (e. getY() - frame.getInsets().top) / (int)game.getYRatio());
@@ -58,7 +61,7 @@ public class MouseInputHandler implements MouseInputListener {
 	}
 
 	public void mousePressed(MouseEvent e) {
-		Point p = new Point((e.getX() - frame.getInsets().left) / (int)game.getXRatio(), (e. getY() - frame.getInsets().top) / (int)game.getYRatio());
+		Point p = new Point((e.getX() - frame.getInsets().left) / (int)JavaEngine.getXRatio(), (e. getY() - frame.getInsets().top) / (int)JavaEngine.getYRatio());
 		pos = p;
 
 		GameObject[] objects = controller.getGameObjects("MouseInteract");
@@ -75,7 +78,7 @@ public class MouseInputHandler implements MouseInputListener {
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		Point p = new Point((e.getX() - frame.getInsets().left) / (int)game.getXRatio(), (e. getY() - frame.getInsets().top) / (int)game.getYRatio());
+		Point p = new Point((e.getX() - frame.getInsets().left) / (int)JavaEngine.getXRatio(), (e. getY() - frame.getInsets().top) / (int)JavaEngine.getYRatio());
 		if(Math.abs(pos.getX() - p.getX()) < 2 && Math.abs(pos.getY() - p.getY()) < 2) {
 			GameObject[] objects = controller.getGameObjects("MouseInteract");
 			for(GameObject obj:objects) {

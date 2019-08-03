@@ -21,10 +21,6 @@ public class SpriteGraphic {
 	 */
 	
 	public SpriteGraphic(int width, int height) {
-		if(JavaEngine.getCurrentInstance() != null) {
-			this.width = (int)(width * JavaEngine.getXRatio());
-			this.height = (int)(height * JavaEngine.getYRatio());
-		}
 		this.width = (int)(width * JavaEngine.getXRatio());
 		this.height = (int)(height * JavaEngine.getYRatio());
 	}
@@ -41,6 +37,11 @@ public class SpriteGraphic {
 		y *= JavaEngine.getYRatio();
 		g.drawImage(graphic, x, y, width, height, null);
 	}
+	
+	/**
+	 * Sets the sprite for this graphics object.
+	 * @param sprite sprite
+	 */
 	
 	public void setSprite(Sprite sprite) {
 		graphic = sprite.getBI();

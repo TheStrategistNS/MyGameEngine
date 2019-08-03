@@ -123,10 +123,6 @@ public class JavaEngine implements Runnable {
 	}
 	
 	/**
-	 * Exits the game.
-	 */
-	
-	/**
 	 * Exits the current instance of the engine.
 	 */
 	
@@ -348,9 +344,19 @@ public class JavaEngine implements Runnable {
 		return instance.screenWidth / instance.gameWidth;
 	}
 	
+	/**
+	 * Sets whether or not the instance is paused.
+	 * @param pause paused
+	 */
+	
 	public static void setPaused(boolean pause) {
 		instance.paused = pause;
 	}
+	
+	/**
+	 * The game thread will pause until the given thread finishes.
+	 * @param t thread to pause for
+	 */
 	
 	public static void pauseForThread(Thread t) {
 		instance.threadPause = t;
@@ -366,9 +372,19 @@ public class JavaEngine implements Runnable {
 		return instance.screenHeight / instance.gameHeight;
 	}
 	
+	/**
+	 * Returns whether or not the game exited successfully. Not true until exited.
+	 * @return success
+	 */
+	
 	public boolean exitedSuccessfully() {
 		return exitSuccess;
 	}
+	
+	/**
+	 * Returns whether or not the game is exited.
+	 * @return exited.
+	 */
 	
 	public static boolean isFinished() {
 		return instance.isFinished;

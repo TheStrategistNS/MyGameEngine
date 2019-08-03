@@ -21,6 +21,10 @@ public class Collider extends GameComponent {
 		previous = new ArrayList<GameObject>();
 	}
 	
+	/**
+	 * Checks whether this collider is touching any other colliders.
+	 */
+	
 	public void Update() {
 		GameObject[] objs = JavaEngine.getObjectController().getGameObjects("Collidable");
 		current = new ArrayList<GameObject>();

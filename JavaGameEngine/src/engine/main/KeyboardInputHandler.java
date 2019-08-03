@@ -65,6 +65,10 @@ public class KeyboardInputHandler implements KeyListener {
 		
 	}
 	
+	/**
+	 * Resets all keys to off state. Try using this method if keys appear to be stuck.
+	 */
+	
 	public void reset() {
 		keys = new boolean[256];
 	}
