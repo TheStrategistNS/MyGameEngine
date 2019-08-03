@@ -21,15 +21,12 @@ public class SpriteGraphic {
 	 */
 	
 	public SpriteGraphic(int width, int height) {
-<<<<<<< HEAD
-		if(JavaEngine.instance != null) {
-			this.width = (int)(width * JavaEngine.instance.getXRatio());
-			this.height = (int)(height * JavaEngine.instance.getYRatio());
+		if(JavaEngine.getCurrentInstance() != null) {
+			this.width = (int)(width * JavaEngine.getXRatio());
+			this.height = (int)(height * JavaEngine.getYRatio());
 		}
-=======
 		this.width = (int)(width * JavaEngine.getXRatio());
 		this.height = (int)(height * JavaEngine.getYRatio());
->>>>>>> rts_project
 	}
 	
 	/**
