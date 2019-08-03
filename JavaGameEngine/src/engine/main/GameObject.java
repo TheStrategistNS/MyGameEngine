@@ -36,7 +36,13 @@ public abstract class GameObject {
 	public GameObject(Coord pos, Dimension size) {
 		this.pos = pos;
 		this.size = size;
-		intantiation();
+		instantiation();
+	}
+	
+	public GameObject(Point pos, Dimension size) {
+		this.pos = new Coord(pos);
+		this.size = size;
+		instantiation();
 	}
 	
 	/**
@@ -46,10 +52,10 @@ public abstract class GameObject {
 	 * @param size size of object
 	 */
 	
-	public GameObject(int x, int y, Dimension size) {
+	public GameObject(double x, double y, Dimension size) {
 		pos = new Coord(x, y);
 		this.size = size;
-		intantiation();
+		instantiation();
 	}
 	
 	/**
@@ -62,7 +68,13 @@ public abstract class GameObject {
 	public GameObject(Coord pos, int width, int height) {
 		this.pos = pos;
 		size = new Dimension(width, height);
-		intantiation();
+		instantiation();
+	}
+	
+	public GameObject(Point pos, int width, int height) {
+		this.pos = new Coord(pos);
+		size = new Dimension(width, height);
+		instantiation();
 	}
 	
 	/**
@@ -73,17 +85,17 @@ public abstract class GameObject {
 	 * @param height height of object
 	 */
 	
-	public GameObject(int x, int y, int width, int height) {
+	public GameObject(double x, double y, int width, int height) {
 		pos = new Coord(x, y);
 		size = new Dimension(width, height);
-		intantiation();
+		instantiation();
 	}
 	
 	/**
 	 * Instantiates various instantiations, and calculates center of mass.
 	 */
 	
-	private void intantiation() {
+	private void instantiation() {
 		recalcCom();
 		tags = new ArrayList<String>();
 		components = new ArrayList<GameComponent>();
@@ -135,10 +147,6 @@ public abstract class GameObject {
 		return pos;
 	}
 	
-	public Point getPosP() {
-		return new Point((int)pos.x,(int)pos.y);
-	}
-	
 	/**
 	 * Sets the position of the object and recalculates center of mass.
 	 * @param newPos new position of object
@@ -150,7 +158,7 @@ public abstract class GameObject {
 	}
 	
 	public void setPos(Point newPos) {
-		pos = new Coord(newPos.x,newPos.y);
+		pos = new Coord(newPos);
 		recalcCom();
 	}
 	
@@ -159,11 +167,6 @@ public abstract class GameObject {
 	 * @param x new x position
 	 * @param y new y position
 	 */
-	
-	public void setPos(int x, int y) {
-		pos = new Coord(x, y);
-		recalcCom();
-	}
 	
 	public void setPos(double x, double y) {
 		pos = new Coord(x, y);
@@ -175,12 +178,6 @@ public abstract class GameObject {
 	 * @param x how far to move x
 	 * @param y how far to move y
 	 */
-	
-	public void incPos(int x, int y) {
-		pos.x += x;
-		pos.y += y;
-		recalcCom();
-	}
 	
 	public void incPos(double x, double y) {
 		pos.x += x;

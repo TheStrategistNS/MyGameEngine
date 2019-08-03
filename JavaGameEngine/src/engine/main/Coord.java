@@ -1,5 +1,7 @@
 package engine.main;
 
+import java.awt.Point;
+
 public class Coord {
 	public double x;
 	public double y;
@@ -14,11 +16,20 @@ public class Coord {
 		this.y = y;
 	}
 	
+	public Coord(Point p) {
+		x = p.x;
+		y = p.y;
+	}
+	
 	public double getX() {
 		return x;
 	}
 	
 	public double getY() {
 		return y;
+	}
+	
+	public Point toPoint() {
+		return new Point((int)x, (int)y);
 	}
 }
