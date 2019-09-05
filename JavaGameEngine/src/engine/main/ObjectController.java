@@ -15,6 +15,8 @@ public class ObjectController {
 	private ArrayList<GameObject> objects;
 	private ArrayList<GameObject> toAdd;
 	private ArrayList<GameObject> toRemove;
+	private HashMap<String, ArrayList<GameObject>> objectTags;
+	private HashMap<Class<?>,ArrayList<GameObject>> objectTypes;
 	
 	/**
 	 * Constructor. Sets up the object controller for use.
@@ -24,6 +26,8 @@ public class ObjectController {
 		objects = new ArrayList<GameObject>();
 		toAdd = new ArrayList<GameObject>();
 		toRemove = new ArrayList<GameObject>();
+		objectTypes = new HashMap<Class<?>,ArrayList<GameObject>>();
+		objectTags = new HashMap<String,ArrayList<GameObject>>();
 	}
 	
 	/**
@@ -60,22 +64,30 @@ public class ObjectController {
 	}
 	
 	/**
+	 * Gets an array of all GameObjects of a certain class.
+	 * @param klass class of object
+	 * @return array of GameObjects
+	 */
+	
+	public <T> GameObject[] getGameObjectsOfType(Class<T> klass){
+		if(objectTypes.containsKey(klass)) {
+			return objectTypes.get(klass).toArray(new GameObject[0]);
+		}
+		else {
+			return new GameObject[0];
+		}
+	}
+	
+	/**
 	 * Gets an array of all GameObjects that contain a String tag
 	 * @param tagFilter filter
 	 * @return filtered GameObjects
 	 */
 	
 	public GameObject[] getGameObjects(String tagFilter) {
-		GameObject[] objs;
-		ArrayList<GameObject> relevant = new ArrayList<GameObject>();
-		for(GameObject obj: objects) {
-			if(obj.containsTag(tagFilter)) {
-				relevant.add(obj);
-			}
-		}
-		objs = new GameObject[relevant.size()];
-		for(int i = 0; i < relevant.size(); i++) {
-			objs[i] = relevant.get(i);
+		GameObject[] objs = new GameObject[0];
+		if(objectTags.containsKey(tagFilter)) {
+			objs = objectTags.get(tagFilter).toArray(objs);
 		}
 		return objs;
 	}
@@ -104,12 +116,26 @@ public class ObjectController {
 		//Remove objects to be removed
 		for(GameObject obj: toRemove) {
 			objects.remove(obj);
+			objectTypes.get(obj.getClass()).remove(obj);
+			for(String tag:obj.getTags()) {
+				objectTags.get(tag).remove(obj);
+			}
 		}
 		toRemove.clear();
 		
 		//Add objects to be added
 		for(GameObject obj: toAdd) {
 			objects.add(obj);
+			if(!objectTypes.containsKey(obj.getClass())) {
+				objectTypes.put(obj.getClass(), new ArrayList<GameObject>());
+			}
+			for(String tag:obj.getTags()) {
+				if(!objectTags.containsKey(tag)) {
+					objectTags.put(tag, new ArrayList<GameObject>());
+				}
+				objectTags.get(tag).add(obj);
+			}
+			objectTypes.get(obj.getClass()).add(obj);
 		}
 		toAdd.clear();
 		

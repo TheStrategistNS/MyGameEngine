@@ -18,7 +18,7 @@ public class Sprite {
 	 */
 	
 	public Sprite() {
-		g = new BufferedImage(100,100,BufferedImage.TYPE_INT_RGB);
+		g = new BufferedImage(100,100,BufferedImage.TYPE_INT_ARGB);
 	}
 	
 	/**

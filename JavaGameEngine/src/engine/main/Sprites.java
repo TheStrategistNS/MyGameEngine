@@ -44,6 +44,10 @@ public class Sprites {
 	 */
 	
 	public static void putSprite(String name, Sprite sprite) {
+		if(instance == null) {
+			instance = new Sprites();
+		}
+		
 		instance.images.put(name, sprite.getBI());
 	}
 	
