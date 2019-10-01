@@ -70,4 +70,16 @@ public class Sprites {
 		}
 		return instance.sprites.get(name).get(size);
 	}
+	
+	/**
+	 * Gets a sprite of image name with a specified size. If the specified size does not currently exist in the sprite index, creates and returns a sprite of the given size.
+	 * @param name name of sprite
+	 * @param width width of sprite
+	 * @param height height of sprite
+	 * @return sprite
+	 */
+	
+	public static Sprite getSprite(String name, int width, int height) {
+		return getSprite(name,new Dimension(width,height));
+	}
 }

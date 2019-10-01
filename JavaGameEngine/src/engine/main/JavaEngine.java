@@ -341,7 +341,7 @@ public class JavaEngine implements Runnable {
 	 */
 	
 	public static double getXRatio() {
-		return instance.screenWidth / instance.gameWidth;
+		return 1.0 * instance.screenWidth / instance.gameWidth;
 	}
 	
 	/**
@@ -369,7 +369,7 @@ public class JavaEngine implements Runnable {
 	 */
 	
 	public static double getYRatio() {
-		return instance.screenHeight / instance.gameHeight;
+		return 1.0 * instance.screenHeight / instance.gameHeight;
 	}
 	
 	/**

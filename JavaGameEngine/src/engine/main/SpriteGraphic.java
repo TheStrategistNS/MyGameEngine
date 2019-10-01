@@ -21,8 +21,8 @@ public class SpriteGraphic {
 	 */
 	
 	public SpriteGraphic(int width, int height) {
-		this.width = (int)(width * JavaEngine.getXRatio());
-		this.height = (int)(height * JavaEngine.getYRatio());
+		this.width = (int)(width * 1.0 * JavaEngine.getXRatio());
+		this.height = (int)(height * 1.0 * JavaEngine.getYRatio());
 	}
 	
 	/**
