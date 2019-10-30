@@ -302,6 +302,17 @@ public abstract class GameObject {
 	}
 	
 	/**
+	 * Sets the sprite for this object given the sprite name, width and height.
+	 * @param name name of the sprite
+	 * @param width needed width of the sprite
+	 * @param height needed height of the sprite
+	 */
+	
+	public void setSprite(String name, int width, int height) {
+		graphic.setSprite(Sprites.getSprite(name, width, height));
+	}
+	
+	/**
 	 * Triggers an event for this object. Calls the onEvent method for this object's event listener.
 	 * @param sender GameObject calling the method
 	 * @param e GameEvent being sent
