@@ -47,10 +47,6 @@ public class SpriteGraphic {
 		graphic = sprite.getBI();
 	}
 	
-	public void setSprite(String name) {
-		graphic = Sprites.getSprite(name, width, height).getBI();
-	}
-	
 	/**
 	 * Checks whether the SpriteGraphic has been set up for use.
 	 * @return true if set up

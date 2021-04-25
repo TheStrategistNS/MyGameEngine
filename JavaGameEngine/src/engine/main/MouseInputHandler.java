@@ -6,8 +6,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.event.MouseInputListener;
 
-import engine.events.EventHandler;
-
 /**
  * Mouse input handler for the Java engine. When mouse clicks on the screen, sends a mouse event to any GameObjects 
  * clicked on that are set to receive mouse events.
@@ -17,7 +15,7 @@ import engine.events.EventHandler;
 
 public class MouseInputHandler implements MouseInputListener {
 	JavaEngine game;
-	EventHandler events;
+	ObjectController controller;
 	JFrame frame;
 	private Point pos;
 	
@@ -30,7 +28,7 @@ public class MouseInputHandler implements MouseInputListener {
 		frame = c;
 		c.addMouseListener(this);
 		this.game = game;
-		events = JavaEngine.getEventHandler();
+		controller = JavaEngine.getObjectController();
 	}
 	
 	/**
@@ -65,19 +63,54 @@ public class MouseInputHandler implements MouseInputListener {
 	public void mousePressed(MouseEvent e) {
 		Point p = new Point((e.getX() - frame.getInsets().left) / (int)JavaEngine.getXRatio(), (e. getY() - frame.getInsets().top) / (int)JavaEngine.getYRatio());
 		pos = p;
-		
-		engine.events.MouseEvent mouse = new engine.events.MouseEvent(engine.events.MouseEvent.MOUSE_PRESSED, p);
-		events.raiseEvent(mouse);
+
+		GameObject[] objects = controller.getGameObjects("MouseInteract");
+		for(GameObject obj:objects) {
+			if(obj.isTouching(p)) {
+				GameEvent click = new GameEvent(GameEvent.MOUSE_EVENT);
+				click.put("type", "mousePressed");
+				click.put("point", p);
+				click.put("x", p.x);
+				click.put("y", p.y);
+				obj.triggerEvent(null, click);
+			}
+		}
 	}
 
 	public void mouseReleased(MouseEvent e) {
 		Point p = new Point((e.getX() - frame.getInsets().left) / (int)JavaEngine.getXRatio(), (e. getY() - frame.getInsets().top) / (int)JavaEngine.getYRatio());
 		if(Math.abs(pos.getX() - p.getX()) < 2 && Math.abs(pos.getY() - p.getY()) < 2) {
-			engine.events.MouseEvent mouse = new engine.events.MouseEvent(engine.events.MouseEvent.MOUSE_CLICK, p);
-			events.raiseEvent(mouse);
+			GameObject[] objects = controller.getGameObjects("MouseInteract");
+			for(GameObject obj:objects) {
+				if(obj.isTouching(p)) {
+					GameEvent click = new GameEvent(GameEvent.MOUSE_EVENT);
+					click.put("type", "click");
+					click.put("point", p);
+					click.put("x", p.x);
+					click.put("y", p.y);
+					obj.triggerEvent(null, click);
+					click = new GameEvent(GameEvent.MOUSE_EVENT);
+					click.put("type", "mouseReleased");
+					click.put("point", p);
+					click.put("x", p.x);
+					click.put("y", p.y);
+					obj.triggerEvent(null, click);
+				}
+			}
 		}
-		engine.events.MouseEvent mouse = new engine.events.MouseEvent(engine.events.MouseEvent.MOUSE_RELEASED, p);
-		events.raiseEvent(mouse);
+		else {
+			GameObject[] objects = controller.getGameObjects("MouseInteract");
+			for(GameObject obj:objects) {
+				if(obj.isTouching(p)) {
+					GameEvent click = new GameEvent(GameEvent.MOUSE_EVENT);
+					click.put("type", "mouseReleased");
+					click.put("point", p);
+					click.put("x", p.x);
+					click.put("y", p.y);
+					obj.triggerEvent(null, click);
+				}
+			}
+		}
 	}
 
 	public void mouseDragged(MouseEvent e) {

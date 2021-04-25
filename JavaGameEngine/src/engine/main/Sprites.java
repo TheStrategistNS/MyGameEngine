@@ -59,9 +59,6 @@ public class Sprites {
 	 */
 	
 	public static Sprite getSprite(String name, Dimension size) {
-		if(instance == null) {
-			instance = new Sprites();
-		}
 		if(!instance.images.containsKey(name)) {
 			return null;
 		}
