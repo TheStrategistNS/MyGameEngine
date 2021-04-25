@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import engine.events.EventHandler;
+
 /**
  * <p>My basic Java game engine. For use in java code.</p>
  * <p>Works through GameScript interfaces. Each script, once added to the engine, gets initialized on start, then runs through an update and run method every frame.</p>
@@ -28,6 +30,7 @@ public class JavaEngine implements Runnable {
 	private long frame;								//Current frame
 	private GameScreen screen;						//Game screen
 	private ObjectController controller;			//Object controller object
+	private EventHandler events;					//Event handler
 	private ArrayList<GameScript> scripts;			//List of game scripts
 	
 	private int fps;								//FPS to run at
@@ -57,6 +60,7 @@ public class JavaEngine implements Runnable {
 		scripts = new ArrayList<GameScript>();
 		
 		controller = new ObjectController();
+		events = new EventHandler();
 		
 		instance = this;
 		
@@ -179,6 +183,8 @@ public class JavaEngine implements Runnable {
 		
 		controller.Update();
 		
+		events.update();
+		
 		for(GameScript script: scripts) {
 			script.update();
 		}
@@ -245,6 +251,10 @@ public class JavaEngine implements Runnable {
 	
 	public static ObjectController getObjectController() {
 		return instance.controller;
+	}
+	
+	public static EventHandler getEventHandler() {
+		return instance.events;
 	}
 	
 	/**

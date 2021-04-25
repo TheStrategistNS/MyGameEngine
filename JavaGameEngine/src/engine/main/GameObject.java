@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import engine.events.GameEvent;
+
 /**
  * Base class for all GameObjects in the game.
  * @author Taylor Houthoofd
@@ -21,7 +23,6 @@ public abstract class GameObject {
 	private int drawLevel;
 	protected SpriteGraphic graphic;
 	
-	private GameEventListener listener;
 	private ArrayList<String> tags;
 	private ArrayList<GameComponent> components;
 	
@@ -114,6 +115,16 @@ public abstract class GameObject {
 		components = new ArrayList<GameComponent>();
 		drawLevel = DEFAULT_DRAW_LEVEL;
 		graphic = new SpriteGraphic(size.width, size.height);
+	}
+	
+	//Override methods - methods meant to be overriden as needed
+	
+	public void onEvent(int type, GameEvent e) {
+		
+	}
+	
+	public void onDestroy() {
+		
 	}
 	
 	//Public methods
@@ -253,7 +264,7 @@ public abstract class GameObject {
 	 * @return true if yes
 	 */
 	
-	boolean isTouching(Point point) {
+	public boolean isTouching(Point point) {
 		boolean touching = true;
 		
 		if(point.getX() <= pos.getX() || point.getX() >= pos.getX() + size.getWidth()) {
@@ -276,12 +287,11 @@ public abstract class GameObject {
 	}
 	
 	/**
-	 * Removes this object from the game's active objects. Generates an onDestroy event for the object.
+	 * Removes this object from the game's active objects.
 	 */
 	
-	public void kill() {
-		GameEvent e = new GameEvent(GameEvent.ON_DESTROY);
-		triggerEvent(this, e);
+	public void destroy() {
+		onDestroy();
 		controller.removeObject(this);
 	}
 	
@@ -297,7 +307,7 @@ public abstract class GameObject {
 		}
 		else {
 			System.err.println("Trying to render object not set up. Deleteing object.");
-			kill();
+//			kill();
 		}
 	}
 	
@@ -313,41 +323,15 @@ public abstract class GameObject {
 	}
 	
 	/**
-	 * Triggers an event for this object. Calls the onEvent method for this object's event listener.
-	 * @param sender GameObject calling the method
-	 * @param e GameEvent being sent
-	 */
-	
-	public void triggerEvent(GameObject sender, GameEvent e) {
-		if(listener != null) {
-			listener.onEvent(sender, e);
-		}
-	}
-	
-	/**
 	 * Sets whether this object will trigger an event when clicked.
 	 * @param clickable generate event
 	 */
 	
 	public void setClickable(boolean clickable) {
-		if(clickable) {
-			addTag("MouseInteract");
-		}else{
-			removeTag("MouseInteract");
-		}
+		JavaEngine.getEventHandler().subscribeEvent(this, "mouse");
 	}
 	
 	//Protected methods
-	
-	/**
-	 * Adds a GameEventListener for this GameObject. The listener's onEvent method is called whenever an event 
-	 * for this object is triggered.
-	 * @param listener GameEventListener to add
-	 */
-	
-	protected void addGameEventListener(GameEventListener listener) {
-		this.listener = listener;
-	}
 	
 	/**
 	 * Adds a GameComponent to this object.

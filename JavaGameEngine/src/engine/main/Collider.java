@@ -2,6 +2,8 @@ package engine.main;
 
 import java.util.ArrayList;
 
+import engine.events.CollisionEvent;
+
 /**
  * A collider component for a GameObject. Every frame, checks to see whether any other colliders intersect 
  * with this one. Creates a collision event if so.
@@ -35,24 +37,20 @@ public class Collider extends GameComponent {
 			if(obj != attached) {				
 				if(checkTouching(obj)) {
 					current.add(obj);
-					GameEvent e = new GameEvent(GameEvent.COLLISION);
-					e.put("object", obj);
+					int type = -1;
 					if(previous.contains(obj)) {
-						e.put("type", "touching");
+						type = CollisionEvent.TOUCHING;
 						previous.remove(obj);
 					}
 					else {
-						e.put("type", "onEnter");
+						type = CollisionEvent.ON_ENTER;
 					}
-					attached.triggerEvent(attached, e);
+					JavaEngine.getEventHandler().raiseEvent(new CollisionEvent(type,obj,attached));
 				}
 			}
 		}
 		for(GameObject obj: previous) {
-			GameEvent e = new GameEvent(GameEvent.COLLISION);
-			e.put("object", obj);
-			e.put("type", "onExit");
-			attached.triggerEvent(attached, e);
+			JavaEngine.getEventHandler().raiseEvent(new CollisionEvent(CollisionEvent.ON_EXIT, obj, attached));
 		}
 		previous = current;
 	}
