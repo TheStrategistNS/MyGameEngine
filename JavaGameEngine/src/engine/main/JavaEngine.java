@@ -400,4 +400,14 @@ public class JavaEngine implements Runnable {
 		return instance.isFinished;
 	}
 	
+	/**
+	 * Pauses the calling thread until the game exits. Does not work in the game thread.
+	 * @throws InterruptedException
+	 */
+	
+	public void waitForExit() throws InterruptedException {
+		if(!thread.equals(Thread.currentThread()))
+			thread.join();
+	}
+	
 }
