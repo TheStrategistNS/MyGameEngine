@@ -306,7 +306,7 @@ public abstract class GameObject {
 			graphic.Render(g, (int)pos.x, (int)pos.y);
 		}
 		else {
-			System.err.println("Trying to render object not set up. Deleteing object.");
+//			System.err.println("Trying to render object not set up. Deleteing object.");
 //			kill();
 		}
 	}
